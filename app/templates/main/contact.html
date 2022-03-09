@@ -1,0 +1,29 @@
+  {% extends 'main/layout.html' %}
+  {% block container %}
+    <div class="container mt-5 p-5 pt-0">
+        <h2 class="fw-bold my-5">CONTACT ME</h2>
+        <p class="mb-5">If you’d like to chat about a project or just have question, please ﬁll in
+            the form below. I aim to get back within 2 days.</p>
+        <form class="row mb-5">
+            <div class="col-md-6 mb-3">
+              <label for="name" class="form-label fw-bold">Name*</label>
+              <input type="text" class="form-control" id="name" placeholder="Please enter your name">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label fw-bold">Email*</label>
+              <input type="email" class="form-control" id="email" placeholder="Please enter your mail address">
+            </div>
+            <div class="col-12 mb-3">
+              <label for="subject" class="form-label fw-bold">Subject*</label>
+              <input type="text" class="form-control" id="subject" placeholder="Please write down the subject">
+            </div>
+            <div class="col-12 mb-3">
+              <label for="message" class="form-label fw-bold">Message*</label>
+              <textarea class="form-control" id="message" placeholder="Please write your message"></textarea>
+            </div> 
+            <div class="col-12 text-center">
+                <button class="btn btn-primary fw-bold" type="submit">SEND MESSAGE</button>
+            </div>
+      </form>
+    </div>
+  {% endblock %}
