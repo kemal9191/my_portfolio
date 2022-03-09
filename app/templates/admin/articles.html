@@ -19,11 +19,11 @@
                         <div class="d-flex my-3 wrap flex-column flex-lg-row col-12">
                             <div class="ms-lg-5 mt-3 mt-lg-0">
                                 <h2 class="fw-bold">{{article.title|title}}{{flask}}</h2>
-                                <h4 class="text-secondary">
+                                <h5 class="text-secondary">
                                     {% for subject in article.subjects %}
                                         <span>#{{subject}}</span>
                                     {% endfor %}
-                                </h4>
+                                </h5>
                                 <p class="article-list">{{article.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
                                 <span class="text-muted">{{article.date_last_modified.strftime('%Y-%m-%d')}}</span>
                                 <div class="col-12 my-3">

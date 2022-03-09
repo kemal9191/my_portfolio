@@ -1,27 +1,24 @@
     {% extends 'main/layout.html' %}
     {% block container %} 
-    {% if content is not none%}
         <div class="container mt-5">
-                <h1>{{content.title|title}}</h1>
-                <div class="d-flex wrap align-items-center py-5 mt-3 bg-light rounded-3">
-                    <ul class="text-start fw-bold">
-                        <li class="d-inline-block pe-5">
-                            <i class="fa-solid fa-book-open-reader"></i> 10 minute read
-                        </li>
-                        <li class="d-inline-block pe-5">
-                            <i class="fa-solid fa-layer-group"></i> 
-                            {% for subject in content.subjects %}
-                                {{subject}}
-                            {% endfor %}
-                        </li>
-                        <li class="d-inline-block pe-5">
-                            <i class="fa-solid fa-link"></i> Share on Twitter
-                        </li>
-                    </ul>
-                </div>
-                <p class="mb-5 py-2">{{content.content|safe}}</p>
+            <h1>{{content.title|title}}</h1>
+            <div class="d-flex wrap align-items-center py-5 mt-3 bg-light rounded-3">
+                <ul class="text-start fw-bold">
+                    <li class="d-inline-block pe-5">
+                        <i class="fa-solid fa-book-open-reader"></i> 10 minute read
+                    </li>
+                    <li class="d-inline-block pe-5">
+                        <i class="fa-solid fa-layer-group"></i> 
+                        {% for subject in content.subjects %}
+                            {{subject}}
+                        {% endfor %}
+                    </li>
+                    <li class="d-inline-block pe-5">
+                        <i class="fa-solid fa-link"></i> Share on Twitter
+                    </li>
+                </ul>
+            </div>
+            <p class="mb-5 py-2">{{content.content|safe}}</p>
         </div> 
-        {% endif %}
-
     {% endblock %}
 

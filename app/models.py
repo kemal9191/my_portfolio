@@ -29,3 +29,12 @@ class Content(db.Model):
     image = db.Column(db.String())
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
 
+
+class FormRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
+    subject = db.Column(db.String(), nullable=False)
+    message = db.Column(db.String(), nullable=False)
+    
+

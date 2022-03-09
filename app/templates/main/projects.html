@@ -14,7 +14,7 @@
                             <p class="article-list">{{project.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
                             <span class="text-muted">{{project.date_last_modified.strftime('%Y-%m-%d')}}</span>
                             <div class="col-12 my-4">
-                                <button class="btn btn-primary fw-bold" data-id="{{project.id}}">VIEW DETAILS</button>
+                                <a class="btn btn-primary fw-bold" data-id="{{project.id}}" href="{{url_for('main.project_detailed', id=project.id)}}">VIEW DETAILS</a>
                             </div>
                         </div>
                     </div>
