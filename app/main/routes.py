@@ -18,22 +18,38 @@ def home():
 def projects():
     page = request.args.get('page', 1, type=int)
     projects = Content.query.filter_by(type='Project').order_by(Content.date_added.desc())\
-        .paginate(page=page, per_page=3)
+        .paginate(page=page, per_page=30)
     return render_template('main/projects.html', projects=projects)
 
 
 @main.route('/articles')
 def articles():
-    flask = db.session.query(Content).filter(Content.subjects.contains({'Flask'})).count()
-    javascript = db.session.query(Content).filter(Content.subjects.contains({'JavaScript'})).count()
-    css = db.session.query(Content).filter(Content.subjects.contains({'CSS3'})).count()
-    bootstrap = db.session.query(Content).filter(Content.subjects.contains({'Bootstrap'})).count()
-    HTML = db.session.query(Content).filter(Content.subjects.contains({'HTML5'})).count()
-    python = db.session.query(Content).filter(Content.subjects.contains({'Python'})).count()
+    flask = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Flask'})).count()
+    javascript = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'JavaScript'})).count()
+    css = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'CSS3'})).count()
+    bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
+    HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
+    python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
     categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
     page = request.args.get('page', 1, type=int)
     articles = Content.query.filter_by(type='Article').order_by(Content.date_added.desc())\
-        .paginate(page=page, per_page=3)
+        .paginate(page=page, per_page=30)
+    total = Content.query.filter_by(type='Article').count()
+    return render_template('main/articles.html', articles=articles, categories=categories, total=total)
+
+
+@main.route('/articles/<string:category>')
+def show_by_category(category):
+    flask = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Flask'})).count()
+    javascript = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'JavaScript'})).count()
+    css = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'CSS3'})).count()
+    bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
+    HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
+    python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
+    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
+    page = request.args.get('page', 1, type=int)
+    articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
+        .paginate(page=page, per_page=30)
     return render_template('main/articles.html', articles=articles, categories=categories)
 
 

@@ -4,7 +4,8 @@
             <div class="ms-4">
                 <h2 class="fw-bold">PROJECTS</h2>
                 <p class="fw-bold">Some of my projects and spare time tinkering</p>
-                {% for project in projects.items %}
+                <div class="project-container">
+                    {% for project in projects.items %}
                     <div class="d-flex my-5 wrap flex-column flex-lg-row">
                         {% if project.image %}
                             <img src="{{url_for('static', filename=project.image)}}" class="col-lg-4 img-thumbnail">
@@ -20,15 +21,17 @@
                     </div>
                     <hr class="border border-2 border-secondary">
                 {% endfor %}
-                <div class="container d-flex justify-content-center mb-3">
+                </div>
+                <div class="container d-flex justify-content-center mb-3 page-num">
                 {% for page_num in projects.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                 {% if page_num.total != 1 %}
                 {% if page_num %}
                     {% if projects.page == page_num %}
-                      <a class="btn btn-primary mb-4 mx-2" href="{{ url_for('main.projects', page=page_num) }}">{{ page_num }}</a>
-                    {% else %}
-                      <a class="btn btn-outline-primary mb-4 mx-2" href="{{ url_for('main.projects', page=page_num) }}">{{ page_num }}</a>
-                    {% endif %}
+
+                      <!--<a class="btn btn-primary mb-4 mx-2" href="{{ url_for('main.projects', page=page_num) }}">{{ page_num }}</a>-->
+                      {% else %}
+                      <!--<a class="btn btn-outline-primary mb-4 mx-2" href="{{ url_for('main.projects', page=page_num) }}">{{ page_num }}</a>-->
+                      {% endif %}
                   {% else %}
                     ...
                   {% endif %}

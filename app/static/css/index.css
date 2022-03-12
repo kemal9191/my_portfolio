@@ -173,10 +173,11 @@ footer li:hover{
     -webkit-box-orient: vertical;
 }
 
-ul li>span:where(:first-child):hover{
-    cursor:pointer;
-}
-
 .search-bar:focus{
     transform: scale(1.05);
+}
+
+hr:where(:last-child){
+    display: none;
+
 }

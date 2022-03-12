@@ -25,6 +25,7 @@ def login():
 
 
 @admin.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash('Logout is successful', 'success')
@@ -32,46 +33,84 @@ def logout():
 
 
 @admin.route('/admin/projects')
+@login_required
 def all_projects():
     page = request.args.get('page', 1, type=int)
     projects = Content.query.filter_by(type='Project').order_by(Content.date_added.desc())\
-        .paginate(page=page, per_page=3)
+        .paginate(page=page, per_page=30)
     return render_template('admin/projects.html', projects=projects)
 
 
 @admin.route('/admin/articles')
+@login_required
 def all_articles():
-    flask = db.session.query(Content).filter(Content.subjects.contains({'Flask'})).count()
-    javascript = db.session.query(Content).filter(Content.subjects.contains({'JavaScript'})).count()
-    css = db.session.query(Content).filter(Content.subjects.contains({'CSS3'})).count()
-    bootstrap = db.session.query(Content).filter(Content.subjects.contains({'Bootstrap'})).count()
-    HTML = db.session.query(Content).filter(Content.subjects.contains({'HTML5'})).count()
-    python = db.session.query(Content).filter(Content.subjects.contains({'Python'})).count()
+    flask = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Flask'})).count()
+    javascript = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'JavaScript'})).count()
+    css = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'CSS3'})).count()
+    bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
+    HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
+    python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
     categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
     page = request.args.get('page', 1, type=int)
     articles = Content.query.filter_by(type='Article').order_by(Content.date_added.desc())\
-        .paginate(page=page, per_page=3)
-    return render_template('admin/articles.html', articles=articles, categories=categories)
+        .paginate(page=page, per_page=30)
+    total = Content.query.filter_by(type='Article').count()
+    return render_template('admin/articles.html', articles=articles, categories=categories, total=total)
 
 
-@admin.route('/admin/projects/<int:id>', methods=['PATCH'])
-def update_project(id):
-    return render_template('admin/admin.html')
+@admin.route('/admin/articles/<string:category>')
+@login_required
+def show_by_category(category):
+    flask = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Flask'})).count()
+    javascript = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'JavaScript'})).count()
+    css = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'CSS3'})).count()
+    bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
+    HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
+    python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
+    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
+    page = request.args.get('page', 1, type=int)
+    articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
+        .paginate(page=page, per_page=30)
+    total = Content.query.filter_by(type='Article').count()
+    return render_template('admin/articles.html', articles=articles, categories=categories, total=total)
 
 
-@admin.route('/admin/projects/<int:id>', methods=['DELETE'])
-def delete_project(id):
-    pass
+@admin.route('/admin/update/<int:id>', methods=['GET','POST'])
+@login_required
+def update_content(id):
+    form = ContentForm()
+    content = Content.query.get(id)
+    if request.method == 'GET':
+        form.type.data = content.type
+        form.subjects.data = content.subjects
+        form.title.data = content.title
+        form.content.data = content.content
+    if request.method == 'POST':
+        if form.validate_on_submit:
+            content.type = form.type.data
+            content.subjects = form.subjects.data
+            content.title = form.title.data
+            content.content = form.content.data
+            db.session.commit()
+            flash("Content has been updated!", "success")
+        else:
+            flash("Please check your input!")
+            return redirect(url_for('admin.update_content'))
+        if content.type == 'Article':
+            return redirect(url_for('admin.all_articles'))
+        if content.type == 'Project':
+            return redirect(url_for('admin.all_projects'))
+    return render_template('admin/admin.html', form=form)
 
 
-@admin.route('/admin/articles/<int:id>', methods=['PATCH'])
-def update_article(id):
-    return render_template('admin/admin.html')
-
-
-@admin.route('/admin/articles/<int:id>', methods=['DELETE'])
-def delete_article(id):
-    pass
+@admin.route('/admin/delete/<int:id>', methods=['GET','DELETE'])
+@login_required
+def delete_content(id):
+    content = Content.query.get(id)
+    db.session.delete(content)
+    db.session.commit()
+    flash('Content has been deleted!', "info")
+    return redirect(url_for('admin.all_articles'))
 
 @admin.route('/admin/new', methods=['POST', 'GET'])
 @login_required

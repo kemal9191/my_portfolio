@@ -1,6 +1,6 @@
     {% extends 'main/layout.html' %}
     {% block container %} 
-        <div class="container mt-5">
+        <div class="container mt-5 pb-5">
             <h1>{{content.title|title}}</h1>
             <div class="d-flex wrap align-items-center py-5 mt-3 bg-light rounded-3">
                 <ul class="text-start fw-bold">
@@ -18,7 +18,9 @@
                     </li>
                 </ul>
             </div>
-            <p class="mb-5 py-2">{{content.content|safe}}</p>
+            <div class="mb-5">
+                <p class="mb-5 pb-5">{{content.content|safe}}</p>
+            </div>
         </div> 
     {% endblock %}
 
