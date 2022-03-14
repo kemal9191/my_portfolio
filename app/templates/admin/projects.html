@@ -4,18 +4,16 @@
           <div class="project-container">
                         {% for project in projects.items %}
                     <div class="d-flex my-5 wrap flex-column flex-lg-row">
-                        {% if project.image %}
-                            <img src="{{url_for('static', filename=project.image)}}" class="col-lg-4 img-thumbnail">
-                        {% endif %}
+                          <img src="{{project.image}}" class="col-lg-4 img-thumbnail img-fluid">
                         <div class="ms-lg-5 mt-5 mt-lg-0 col-lg-8">
-                            <h2 class="fw-bold">{{project.title|title}}</h2>
+                            <h4 class="fw-bold uppercase">{{project.title|title}}</h4>
                             <p class="article-list">{{project.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
                             <span class="text-muted">{{project.date_last_modified.strftime('%Y-%m-%d')}}</span>
                             <div class="col-12 my-4">
                                 <a class="btn btn-primary fw-bold" data-id="{{project.id}}" href="{{url_for('admin.update_content', id=project.id)}}">UPDATE</a>
-                                <a type="button" class="btn btn-danger fw-bold" data-id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">DELETE</a>
+                                <a type="button" class="btn btn-danger fw-bold" data-id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal-{{project.id}}">DELETE</a>
                                 <!--Modal Starts-->
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal-{{project.id}}" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
                                         <div class="modal-header">

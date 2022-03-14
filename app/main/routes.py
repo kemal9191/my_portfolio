@@ -1,9 +1,9 @@
 from flask import redirect, render_template, request, Blueprint, abort, flash, url_for
-from sqlalchemy import null
 from app.models import *
 from app import db
 from app.models import Content, FormRequest
 from app.main.forms import ContactForm
+
 
 main = Blueprint('main', __name__)
 
@@ -19,6 +19,7 @@ def projects():
     page = request.args.get('page', 1, type=int)
     projects = Content.query.filter_by(type='Project').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
+
     return render_template('main/projects.html', projects=projects)
 
 
@@ -50,7 +51,8 @@ def show_by_category(category):
     page = request.args.get('page', 1, type=int)
     articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
-    return render_template('main/articles.html', articles=articles, categories=categories)
+    total = Content.query.filter_by(type='Article').count()
+    return render_template('main/articles.html', articles=articles, categories=categories, total=total)
 
 
 @main.route('/projects/<int:id>')
@@ -58,7 +60,8 @@ def project_detailed(id):
     project = Content.query.filter_by(type='Project', id=id).one_or_none()
     if project is None:
         abort(404)
-    return render_template('main/item-details.html', content=project)
+    url = url_for('static', filename="images/"+project.image)
+    return render_template('main/item-details.html', content=project, url=url)
 
 
 @main.route('/articles/<int:id>')

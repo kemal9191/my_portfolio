@@ -3,7 +3,7 @@
         <div class="container">
             <div class="d-flex flex-column flex-lg-row justify-content-between align-items mt-5">
                 <div class="d-flex flex-column mt-3 col-lg-5">
-                    <h2 class="fw-bold">SEARCH</h2>
+                    <h4 class="fw-bold">SEARCH</h4>
                     <input type="text" class="rounded col-md-6 mt-3 search-bar" placeholder="JavaScript, Flask, HTML5, CSS3">
                     <ul class="mt-5">
                     {% for key, val in categories.items() %}
@@ -23,19 +23,19 @@
                         {% for article in articles.items %}
                         <div class="d-flex my-3 wrap flex-column flex-lg-row col-12">
                             <div class="ms-lg-5 mt-3 mt-lg-0">
-                                <h2 class="fw-bold">{{article.title|title}}</h2>
-                                <h5 class="text-secondary">
+                                <h4 class="fw-bold uppercase">{{article.title|title}}</h4>
+                                <h6 class="text-secondary">
                                     {% for subject in article.subjects %}
                                         <span>#{{subject}}</span>
                                     {% endfor %}
-                                </h5>
+                                </h6>
                                 <p class="article-list">{{article.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
                                 <span class="text-muted">{{article.date_last_modified.strftime('%Y-%m-%d')}}</span>
                                 <div class="col-12 my-3">
                                     <a class="btn btn-primary fw-bold" data-id="{{article.id}}" href="{{url_for('admin.update_content', id=article.id)}}">UPDATE</a>
-                                    <a type="button" class="btn btn-danger fw-bold" data-id="{{article.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal">DELETE</a>
+                                    <a type="button" class="btn btn-danger fw-bold" data-id="{{article.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal-{{article.id}}">DELETE</a>
                                 <!--Modal Starts-->
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="confirmationModal-{{article.id}}" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                       <div class="modal-content">
                                         <div class="modal-header">

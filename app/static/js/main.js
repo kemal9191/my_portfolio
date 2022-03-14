@@ -2,7 +2,7 @@
 /*-----------Searching-----------*/
 function searching(){
     let input = $('.search-bar').val().toLowerCase();
-    let articles = $('h2')
+    let articles = $('h4')
     if(input.length>2){
         input = input.slice(0,input.length-1)
     }

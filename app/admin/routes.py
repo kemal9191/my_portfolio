@@ -3,6 +3,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.models import Admin, Content
 from app.admin.forms import LoginForm, ContentForm
+from app.admin.utils import save_picture
+
 
 admin = Blueprint('admin', __name__)
 
@@ -85,8 +87,12 @@ def update_content(id):
         form.subjects.data = content.subjects
         form.title.data = content.title
         form.content.data = content.content
+        form.image.data = content.image
     if request.method == 'POST':
         if form.validate_on_submit:
+            if form.image.data:
+                image = save_picture(form.image.data)
+                content.image = image
             content.type = form.type.data
             content.subjects = form.subjects.data
             content.title = form.title.data
@@ -110,16 +116,24 @@ def delete_content(id):
     db.session.delete(content)
     db.session.commit()
     flash('Content has been deleted!', "info")
-    return redirect(url_for('admin.all_articles'))
+    return redirect(url_for('admin.all_projects'))
+    
 
 @admin.route('/admin/new', methods=['POST', 'GET'])
 @login_required
 def add_content():
     form = ContentForm()
     if form.validate_on_submit():
-        content = Content(type=form.type.data, title=form.title.data,
+        if form.image.data:
+            image = save_picture(form.image.data)
+            url = url_for('static', filename="images/"+image)
+            content = Content(type=form.type.data, title=form.title.data,
                             subjects=form.subjects.data, content=form.content.data,
-                            image='images/home.jpeg', admin=current_user)
+                            image=url, admin=current_user)
+        else:
+            content = Content(type=form.type.data, title=form.title.data,
+                                subjects=form.subjects.data, content=form.content.data,
+                                image='', admin=current_user)
         db.session.add(content)
         db.session.commit()
         flash('Your content has been created!', 'success')
