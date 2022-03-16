@@ -21,42 +21,45 @@
                 <div class="d-flex flex-column col-lg-7 mt-5">
                     <div class="article-container">
                         {% for article in articles.items %}
-                        <div class="d-flex my-3 wrap flex-column flex-lg-row col-12">
-                            <div class="ms-lg-5 mt-3 mt-lg-0">
-                                <h4 class="fw-bold uppercase">{{article.title|title}}</h4>
-                                <h6 class="text-secondary">
-                                    {% for subject in article.subjects %}
-                                        <span>#{{subject}}</span>
-                                    {% endfor %}
-                                </h6>
-                                <p class="article-list">{{article.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
-                                <span class="text-muted">{{article.date_last_modified.strftime('%Y-%m-%d')}}</span>
-                                <div class="col-12 my-3">
-                                    <a class="btn btn-primary fw-bold" data-id="{{article.id}}" href="{{url_for('admin.update_content', id=article.id)}}">UPDATE</a>
-                                    <a type="button" class="btn btn-danger fw-bold" data-id="{{article.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal-{{article.id}}">DELETE</a>
-                                <!--Modal Starts-->
-                                <div class="modal fade" id="confirmationModal-{{article.id}}" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="confirmationModalLabel">Delete</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          Are you sure?
-                                        </div>
-                                        <div class="modal-footer">
-                                          <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">BACK</a>
-                                          <a type="button" class="btn btn-primary" href="{{url_for('admin.delete_content', id=article.id)}}">DELETE</a>
+                        <div class="content-container">
+                            <div class="d-flex my-3 wrap flex-column flex-lg-row col-12">
+                                <div class="ms-lg-5 mt-3 mt-lg-0">
+                                    <h4 class="fw-bold uppercase">{{article.title|title}}</h4>
+                                    <h6 class="text-secondary">
+                                        {% for subject in article.subjects %}
+                                            <span>#{{subject}}</span>
+                                        {% endfor %}
+                                    </h6>
+                                    <p class="article-list">{{article.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
+                                    <span class="text-muted">{{article.date_last_modified.strftime('%Y-%m-%d')}}</span>
+                                    <div class="col-12 my-3">
+                                        <a class="btn btn-primary fw-bold" data-id="{{article.id}}" href="{{url_for('admin.update_content', id=article.id)}}">UPDATE</a>
+                                        <a type="button" class="btn btn-danger fw-bold" data-id="{{article.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal-{{article.id}}">DELETE</a>
+                                    <!--Modal Starts-->
+                                    <div class="modal fade" id="confirmationModal-{{article.id}}" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="confirmationModalLabel">Delete</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              Are you sure?
+                                            </div>
+                                            <div class="modal-footer">
+                                              <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">BACK</a>
+                                              <a type="button" class="btn btn-primary" href="{{url_for('admin.delete_content', id=article.id)}}">DELETE</a>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
+                                      <!--Modal Ends-->
                                     </div>
-                                  </div>
-                                  <!--Modal Ends-->
                                 </div>
                             </div>
+                            <hr class="border border-2 border-secondary">
                         </div>
-                        <hr class="border border-2 border-secondary">
+                        
                     {% endfor %}
                     </div>
                     <div class="container d-flex justify-content-center mb-3 page-num">

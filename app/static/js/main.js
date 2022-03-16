@@ -1,24 +1,15 @@
 /*-----------Utilities-----------*/
 /*-----------Searching-----------*/
-function searching(){
-    let input = $('.search-bar').val().toLowerCase();
-    let articles = $('h4')
-    if(input.length>2){
-        input = input.slice(0,input.length-1)
-    }
-
-    articles.each(function(){
-        if(!$(this).html().toLowerCase().includes(input)){
-            $(this).parent().parent().siblings('hr').hide();
-            $(this).parent().hide();
-        } else {
-            $(this).parent().parent().siblings('hr').show();
-            $(this).parent().show();
-
-        }
+$("document").ready(function(){
+    $(".search-bar").on("keyup", function(){
+        let value = $(this).val().toLowerCase()
+        $(".content-container").each(function(){
+            if(!$(this).children("div").children("div").children("h4").html().toLowerCase().includes(value)){
+                $(this).hide()
+            }else{
+                $(this).show()
+            }
+        })
     })
-
-}
-console.log("aesfh")
-$('.search-bar').on('keyup', searching);
+})
 

@@ -177,7 +177,7 @@ footer li:hover{
     transform: scale(1.05);
 }
 
-hr:where(:last-child){
+.content-container:where(:last-child) hr{
     display: none;
 
 }
