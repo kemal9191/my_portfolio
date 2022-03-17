@@ -92,7 +92,8 @@ def update_content(id):
         if form.validate_on_submit:
             if form.image.data:
                 image = save_picture(form.image.data)
-                content.image = image
+                url = url_for('static', filename="images/"+image)
+                content.image = url
             content.type = form.type.data
             content.subjects = form.subjects.data
             content.title = form.title.data

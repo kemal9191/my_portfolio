@@ -6,8 +6,8 @@
                 <i class="fa-solid fa-calendar-alt m-2 text-muted"></i><span class="text-muted">{{content.date_last_modified.strftime('%Y-%m-%d')}}</span>
             </div>
             <img src="{{content.image}}"  class="img-fluid img-thumbnail mt-3">
-            <div class="d-flex wrap align-items-center py-5 mt-3 bg-light rounded-3">
-                <ul class="text-start fw-bold">
+            <div class="d-flex wrap align-items-center p-4 my-3 rounded-3" style="background-color: #c6c7c8; opacity:0.9">
+                <ul class="text-start fw-bold my-auto">
                     <li class="d-inline-block pe-5">
                         <i class="fa-solid fa-book-open-reader"></i> 10 minute read
                     </li>
@@ -22,7 +22,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="container mb-5">
+            <div class="mb-5">
                 <p class="pt-3">{{content.content|safe}}</p>
             </div>
         </div> 
