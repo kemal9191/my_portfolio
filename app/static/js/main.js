@@ -56,6 +56,16 @@ $primaryButtons.each(function(){
     })
 })
 
+var $dangerButtons = $(".btn-danger")
+$dangerButtons.each(function(){
+    $(this).hover(function(){
+        $(this).addClass("text-danger bg-white");
+    }, function(){
+        $(this).removeClass("text-danger bg-white");
+
+    })
+})
+
 var $categories = $(".category")
 $categories.each(function(){
     $(this).hover(function(){
