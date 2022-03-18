@@ -23,7 +23,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('admin.add_content'))
         else:
             flash('Login unsuccessful. Please check username or password', 'danger')
-    return render_template('admin/login.html', form=form)
+    return render_template('admin/login.html', form=form, title="login")
 
 
 @admin.route('/logout')
@@ -40,7 +40,7 @@ def all_projects():
     page = request.args.get('page', 1, type=int)
     projects = Content.query.filter_by(type='Project').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
-    return render_template('admin/projects.html', projects=projects)
+    return render_template('admin/projects.html', projects=projects, title="projects")
 
 
 @admin.route('/admin/articles')
@@ -57,7 +57,7 @@ def all_articles():
     articles = Content.query.filter_by(type='Article').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
     total = Content.query.filter_by(type='Article').count()
-    return render_template('admin/articles.html', articles=articles, categories=categories, total=total)
+    return render_template('admin/articles.html', articles=articles, categories=categories, total=total, title="articles")
 
 
 @admin.route('/admin/articles/<string:category>')
@@ -74,7 +74,7 @@ def show_by_category(category):
     articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
     total = Content.query.filter_by(type='Article').count()
-    return render_template('admin/articles.html', articles=articles, categories=categories, total=total)
+    return render_template('admin/articles.html', articles=articles, categories=categories, total=total, title="articles", category=category)
 
 
 @admin.route('/admin/update/<int:id>', methods=['GET','POST'])
@@ -88,6 +88,10 @@ def update_content(id):
         form.title.data = content.title
         form.content.data = content.content
         form.image.data = content.image
+        if content.type=="Article":
+            title = "articles"
+        if content.type=="Project":
+            title = "projects"
     if request.method == 'POST':
         if form.validate_on_submit:
             if form.image.data:
@@ -100,6 +104,7 @@ def update_content(id):
             content.content = form.content.data
             db.session.commit()
             flash("Content has been updated!", "success")
+            title = form.type.data
         else:
             flash("Please check your input!")
             return redirect(url_for('admin.update_content'))
@@ -107,7 +112,7 @@ def update_content(id):
             return redirect(url_for('admin.all_articles'))
         if content.type == 'Project':
             return redirect(url_for('admin.all_projects'))
-    return render_template('admin/admin.html', form=form)
+    return render_template('admin/admin.html', form=form, title=title)
 
 
 @admin.route('/admin/delete/<int:id>', methods=['GET','DELETE'])
@@ -139,4 +144,4 @@ def add_content():
         db.session.commit()
         flash('Your content has been created!', 'success')
         return redirect(url_for('admin.add_content'))
-    return render_template('admin/admin.html', form=form)
+    return render_template('admin/admin.html', form=form, title="add")

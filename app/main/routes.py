@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/home')
 @main.route('/')
 def home():
-    return render_template('main/home.html')
+    return render_template('main/home.html', title="home")
 
 
 @main.route('/projects')
@@ -19,8 +19,7 @@ def projects():
     page = request.args.get('page', 1, type=int)
     projects = Content.query.filter_by(type='Project').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
-
-    return render_template('main/projects.html', projects=projects)
+    return render_template('main/projects.html', projects=projects, title="projects")
 
 
 @main.route('/articles')
@@ -36,7 +35,7 @@ def articles():
     articles = Content.query.filter_by(type='Article').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
     total = Content.query.filter_by(type='Article').count()
-    return render_template('main/articles.html', articles=articles, categories=categories, total=total)
+    return render_template('main/articles.html', articles=articles, categories=categories, total=total, title="articles")
 
 
 @main.route('/articles/<string:category>')
@@ -52,7 +51,7 @@ def show_by_category(category):
     articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
     total = Content.query.filter_by(type='Article').count()
-    return render_template('main/articles.html', articles=articles, categories=categories, total=total)
+    return render_template('main/articles.html', articles=articles, categories=categories, total=total, title="articles", category=category)
 
 
 @main.route('/projects/<int:id>')
@@ -61,7 +60,7 @@ def project_detailed(id):
     if project is None:
         abort(404)
     url = url_for('static', filename="images/"+project.image)
-    return render_template('main/item-details.html', content=project, url=url)
+    return render_template('main/item-details.html', content=project, url=url, title="projects")
 
 
 @main.route('/articles/<int:id>')
@@ -69,7 +68,7 @@ def article_detailed(id):
     article = Content.query.filter_by(type='Article', id=id).one_or_none()
     if article is None:
         abort(404)
-    return render_template('main/item-details.html', content=article)
+    return render_template('main/item-details.html', content=article, title="articles")
 
 
 @main.route('/contact', methods=['POST','GET'])
@@ -85,4 +84,4 @@ def contact():
             return redirect(url_for('main.home'))
         else:
             flash("Please check your input", "danger")
-    return render_template('main/contact.html', form=form)
+    return render_template('main/contact.html', form=form, title="contact")

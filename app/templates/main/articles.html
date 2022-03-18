@@ -8,12 +8,12 @@
                     <ul class="mt-5">
                         {% for key, val in categories.items() %}
                             <li class="d-flex justify-content-between align-items-start col-6 py-1">
-                            <a class="fw-bold text-muted" href="{{url_for('main.show_by_category', category=key)}}">{{key}}</a> 
-                            <span class="badge bg-primary rounded-pill">{{val}}</span>
+                                <a {% if category ==key %} class="fw-bold category text-primary" {% else %} class="fw-bold text-muted category" {% endif %} href="{{url_for('main.show_by_category', category=key)}}">{{key}}</a> 
+                                <span class="badge bg-primary rounded-pill">{{val}}</span>
                             </li>
                         {% endfor %}
                         <li class="d-flex justify-content-between align-items-start col-6 py-1">
-                            <a class="fw-bold text-muted" href="{{url_for('main.articles')}}">All</a> 
+                            <a {% if not category  %} class="fw-bold category text-primary" {% else %} class="fw-bold text-muted category" {% endif %} href="{{url_for('main.articles')}}">All</a> 
                             <span class="badge bg-primary rounded-pill">{{total}}</span>
                         </li>
                     </ul>

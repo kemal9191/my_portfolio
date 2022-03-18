@@ -173,6 +173,10 @@ footer li:hover{
     -webkit-box-orient: vertical;
 }
 
+.search-bar{
+    transition: transform 500ms ease;
+}
+
 .search-bar:focus{
     transform: scale(1.05);
 }
@@ -180,4 +184,21 @@ footer li:hover{
 .content-container:where(:last-child) hr{
     display: none;
 
+}
+
+.category{
+    -webkit-transition:border-bottom-color 500ms linear;    
+    -moz-transition:border-bottom-color 500ms linear;      
+    -moz-animation:border-bottom-color 500ms linear; 
+    transition: border-bottom-color 500ms linear;
+    border:2px solid rgba(0, 0, 0, 0);
+    
+}
+
+.category:hover{
+    border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+
+#checked{
+    color: green;
 }

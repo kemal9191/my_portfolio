@@ -31,6 +31,41 @@ $("document").ready(function(){
         })
     })
 })
+/*--------- Hover Effects--------*/
+var $navbarItems = $("ul.nav").children("li").children(".nav-link");
+$navbarItems.each(function(){
+    if(!$(this).attr("class").split(/\s+/).includes("text-primary")){
+        $(this).on("mouseover", function(){
+            $(this).removeClass("text-secondary");
+            $(this).addClass("text-primary");
+        })
+        $(this).on("mouseout", function(){
+            $(this).removeClass("text-primary");
+            $(this).addClass("text-secondary");
+        })
+    }   
+})
 
+var $primaryButtons = $(".btn-primary")
+$primaryButtons.each(function(){
+    $(this).hover(function(){
+        $(this).addClass("text-primary bg-white");
+    }, function(){
+        $(this).removeClass("text-primary bg-white");
+
+    })
+})
+
+var $categories = $(".category")
+$categories.each(function(){
+    $(this).hover(function(){
+        if($(this).attr("class").split(/\s+/).includes("text-primary")){
+            $(this).css({
+                "border-bottom-color":"rgba(0, 0, 0, 0.0)"
+            })
+        }
+    })
+})
+/*---------Utilities End---------*/
 
 
