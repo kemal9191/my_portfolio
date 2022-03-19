@@ -24,7 +24,7 @@ $("document").ready(function(){
     $(".search-bar").on("keyup", function(){
         let value = sanitizeInput($(this).val().toLowerCase())
         console.log(value)
-        $(".content-container").each(function(){
+        $(".article-container").each(function(){
             if(!$(this).children("div").children("div").children("h4").text().toLowerCase().includes(value)){
                 $(this).hide()
             }else{
@@ -33,6 +33,7 @@ $("document").ready(function(){
         })
     })
 })
+
 /*--------- Hover Effects--------*/
 var $navbarItems = $("ul.nav").children("li").children(".nav-link");
 $navbarItems.each(function(){
@@ -78,6 +79,14 @@ $categories.each(function(){
         }
     })
 })
+/*---------Adding Styles---------*/
+var $subjects = $(".subject");
+$subjects.each(function(){
+    if(!$(this).is(":last-child")){
+        $(this).append(" / ");
+    }
+})
+
 /*---------Utilities End---------*/
 
 
