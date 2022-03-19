@@ -47,7 +47,7 @@ img{
 /* Body */
 body{
     font-family: var(--ff-default);
-    font-size: var(--fs-400);
+    font-size: var(--fs-300);
     min-height: 100vh;
     text-align: justify;
 }
@@ -57,7 +57,10 @@ body{
 /*-----------------------------------------*/
 
 /* General */
-
+p{
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
 
 /* Screen Reader Only */
 .sr-only{
@@ -181,9 +184,13 @@ footer li:hover{
     transform: scale(1.05);
 }
 
-.content-container:where(:last-child) hr{
+.article-container:where(:last-child) hr{
     display: none;
 
+}
+
+.project-container hr:where(:last-child){
+    display: none;
 }
 
 .category{

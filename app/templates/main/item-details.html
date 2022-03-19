@@ -6,7 +6,7 @@
                 <i class="fa-solid fa-calendar-alt m-2 text-muted"></i><span class="text-muted">{{content.date_last_modified.strftime('%Y-%m-%d')}}</span>
             </div>
             <img src="{{content.image}}"  class="img-fluid img-thumbnail mt-3">
-            <div class="d-flex wrap align-items-center p-4 my-3 rounded-3" style="background-color: #c6c7c8; opacity:0.9">
+            <div class="d-flex wrap align-items-center p-4 ps-2 my-3 rounded-3" style="background-color: #d6d6d6; opacity:0.8">
                 <ul class="text-start fw-bold my-auto">
                     <li class="d-inline-block pe-5">
                         <i class="fa-solid fa-book-open-reader"></i> 10 minute read
@@ -18,12 +18,12 @@
                         {% endfor %}
                     </li>
                     <li class="d-inline-block pe-5">
-                        <i class="fa-solid fa-link"></i> Share on Twitter
+                        <i class="fa-solid fa-link"></i> Share on <a href="#">Twitter</a>
                     </li>
                 </ul>
             </div>
             <div class="mb-5">
-                <p class="pt-3">{{content.content|safe}}</p>
+                <p class="">{{content.content|safe}}</p>
             </div>
         </div> 
     {% endblock %}

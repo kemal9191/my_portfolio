@@ -11,7 +11,8 @@ main = Blueprint('main', __name__)
 @main.route('/home')
 @main.route('/')
 def home():
-    return render_template('main/home.html', title="home")
+    url = url_for('static', filename="images/avatar.jpg")
+    return render_template('main/home.html', title="home", url=url)
 
 
 @main.route('/projects')

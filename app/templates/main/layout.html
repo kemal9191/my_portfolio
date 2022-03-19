@@ -14,15 +14,17 @@
 </head>
 <body>
     <header class="container d-flex flex-column flex-md-row">
-        <img class="nav-logo img-thumbnail rounded-circle m-4" src="https://avatars.mds.yandex.net/i?id=ace2aa7efcecd10d566278aeefb6af1e-4546260-images-thumbs&n=13&exp=1" alt="">
-        <div class="container mt-4 align-text-bottom col-xs-12">
-            <ul class="nav justify-content-start">
-                <li class="nav-item">
-                    <a href="{{url_for('main.home')}}" class="nav-link fw-bold text-dark">KEMAL PEHLİVAN</a>
+        <img class="nav-logo img-thumbnail rounded-circle my-4" src="{{url_for('static', filename='images/avatar.jpg')}}" alt="">
+        <div class="mt-4 align-text-bottom col-xs-12 ms-md-3">
+            <ul class="nav">
+                <li style="margin-left:-15px">
+                    <h5>
+                        <a href="{{url_for('main.home')}}" class="nav-link fw-bold text-dark" >KEMAL PEHLİVAN</a>
+                    </h5>
+                    <hr style="height: 5px; border-radius: 20%; margin-top: -8px; margin-left:15px; margin-right:15px">
                 </li>
-                <hr style="height: 5px; border-radius: 20%; margin-top: -8px; margin-left:15px; margin-right:15px">
             </ul>
-            <ul class="nav justify-content-start">
+            <ul class="nav justify-content-start mb-3" style="margin-left:-15px">
                 {% if title %}
                 <li class="nav-item">
                     <a {%if title=="projects"%} class="nav-link fw-bold text-primary" {% else %} class="nav-link fw-bold text-secondary" {%endif%} href="{{url_for('main.projects')}}">PROJECTS</a>

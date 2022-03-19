@@ -13,6 +13,8 @@ const sanitizeInput = function(value){
                 i++
          }
      }
+     console.log(value);
+
      return (
          value.trim()
          );

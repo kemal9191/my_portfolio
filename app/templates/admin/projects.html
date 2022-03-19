@@ -7,9 +7,14 @@
                           <img src="{{project.image}}" class="col-lg-4 img-thumbnail img-fluid">
                         <div class="ms-lg-5 mt-5 mt-lg-0 col-lg-8">
                             <h4 class="fw-bold uppercase">{{project.title|title}}</h4>
+                            <h6 class="text-secondary">
+                              {% for subject in project.subjects %}
+                                  <span>#{{subject}}</span>
+                              {% endfor %}
+                          </h6>
                             <p class="article-list">{{project.content|safe|truncate(length=255, killwords=False, end="...")}}</p>
                             <span class="text-muted">{{project.date_last_modified.strftime('%Y-%m-%d')}}</span>
-                            <div class="col-12 my-4">
+                            <div class="col-12 mt-4">
                                 <a class="btn btn-primary fw-bold" data-id="{{project.id}}" href="{{url_for('admin.update_content', id=project.id)}}">UPDATE</a>
                                 <a type="button" class="btn btn-danger fw-bold" data-id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#confirmationModal-{{project.id}}">DELETE</a>
                                 <!--Modal Starts-->
