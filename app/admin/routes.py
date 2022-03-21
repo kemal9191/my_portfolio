@@ -1,3 +1,4 @@
+from xml.dom import ValidationErr
 from flask import redirect, flash, jsonify, render_template, Blueprint, request, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
@@ -87,7 +88,10 @@ def update_content(id):
         form.subjects.data = content.subjects
         form.title.data = content.title
         form.content.data = content.content
+        form.seo_statement.data = content.seo_statement
+        form.seo_keywords.data = content.seo_keywords
         form.image.data = content.image
+        form.image_explanation.data = content.image_str
         if content.type=="Article":
             title = "articles"
         if content.type=="Project":
@@ -102,6 +106,9 @@ def update_content(id):
             content.subjects = form.subjects.data
             content.title = form.title.data
             content.content = form.content.data
+            content.seo_statement = form.seo_statement.data
+            content.seo_keywords = form.seo_keywords.data
+            content.image_str = form.image_explanation.data
             db.session.commit()
             flash("Content has been updated!", "success")
             title = form.type.data
@@ -122,26 +129,34 @@ def delete_content(id):
     db.session.delete(content)
     db.session.commit()
     flash('Content has been deleted!', "info")
-    return redirect(url_for('admin.all_projects'))
+    if(content.type=='Article'):
+        return redirect(url_for('admin.all_articles'))
+    if(content.type=='Project'):
+        return redirect(url_for('admin.all_projects'))
     
 
 @admin.route('/admin/new', methods=['POST', 'GET'])
 @login_required
 def add_content():
     form = ContentForm()
-    if form.validate_on_submit():
-        if form.image.data:
-            image = save_picture(form.image.data)
-            url = url_for('static', filename="images/"+image)
-            content = Content(type=form.type.data, title=form.title.data,
-                            subjects=form.subjects.data, content=form.content.data,
-                            image=url, admin=current_user)
-        else:
-            content = Content(type=form.type.data, title=form.title.data,
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if form.image.data:
+                image = save_picture(form.image.data)
+                url = url_for('static', filename="images/"+image)
+                content = Content(type=form.type.data, title=form.title.data,
                                 subjects=form.subjects.data, content=form.content.data,
-                                image='', admin=current_user)
-        db.session.add(content)
-        db.session.commit()
-        flash('Your content has been created!', 'success')
-        return redirect(url_for('admin.add_content'))
+                                seo_statement = form.seo_statement.data, seo_keywords = form.seo_keywords.data,
+                                image=url, image_str = form.image_explanation.data, admin=current_user)
+            else:
+                content = Content(type=form.type.data, title=form.title.data,
+                                    subjects=form.subjects.data, content=form.content.data,
+                                    seo_statement = form.seo_statement.data, seo_keywords = form.seo_keywords.data,
+                                    image='', image_str = form.image_explanation.data, admin=current_user)
+            db.session.add(content)
+            db.session.commit()
+            flash('Your content has been created!', 'success')
+            return redirect(url_for('admin.add_content'))
+        else:
+            flash("Something wrong, please check your input!", "danger")
     return render_template('admin/admin.html', form=form, title="add")

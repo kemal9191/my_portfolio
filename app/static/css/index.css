@@ -210,3 +210,14 @@ footer li:hover{
     color: green;
 }
 
+
+pre{
+    overflow: scroll;
+    color: #363a3d;
+    background-color: #dadada;
+    margin: 2em;
+    padding: 1em;
+    scroll-snap-type: none;
+}
+
+

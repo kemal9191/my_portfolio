@@ -18,7 +18,19 @@
                     {{form.content(class="form-control", placeholder="Please enter the content")}}
                 </div>
                 <div class="col-md-8 mb-3">
+                    {{form.seo_statement.label(class="form-label fw-bold")}}
+                    {{form.seo_statement(class="form-control", placeholder="Please enter a sentence to decribe the content")}}
+                </div>
+                <div class="col-md-8 mb-3">
+                    {{form.seo_keywords.label(class="form-label fw-bold")}}
+                    {{form.seo_keywords(class="form-control", placeholder="Please enter seo keywords")}}
+                </div>
+                <div class="col-md-8 mb-3">
                     {{form.image(class="form-control")}}
+                </div>
+                <div class="col-md-8 mb-3">
+                    {{form.image_explanation.label(class="form-label fw-bold")}}
+                    {{form.image_explanation(class="form-control")}}
                 </div>
                 <div class="col-12 text-center">
                     {{form.submit(class="btn btn-primary fw-bold")}}

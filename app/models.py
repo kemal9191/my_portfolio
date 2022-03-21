@@ -26,7 +26,10 @@ class Content(db.Model):
     date_last_modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     subjects = db.Column(ARRAY(db.String()), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    seo_statement = db.Column(db.String())
+    seo_keywords = db.Column(db.String())
     image = db.Column(db.String())
+    image_str = db.Column(db.String())
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
 
 
