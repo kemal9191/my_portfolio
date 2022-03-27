@@ -1,3 +1,4 @@
+from datetime import datetime
 from xml.dom import ValidationErr
 from flask import redirect, flash, jsonify, render_template, Blueprint, request, url_for
 from flask_login import login_user, current_user, logout_user, login_required
@@ -109,6 +110,7 @@ def update_content(id):
             content.seo_statement = form.seo_statement.data
             content.seo_keywords = form.seo_keywords.data
             content.image_str = form.image_explanation.data
+            content.date_last_modified = datetime.utcnow()
             db.session.commit()
             flash("Content has been updated!", "success")
             title = form.type.data

@@ -14,7 +14,7 @@ class ContentForm(FlaskForm):
     type = SelectField(choices=['Article', 'Project'] , validators=[DataRequired()])
     subjects = SelectMultipleField(validators=[DataRequired()], choices=['JavaScript', 'Flask', 'Python', 'CSS3', 'HTML5', 'Bootstrap'])
     title = StringField('TITLE:', validators=[DataRequired()])
-    content = TextAreaField('CONTENT:', validators=[InputRequired()])
+    content = TextAreaField('CONTENT:', validators=[DataRequired()])
     seo_statement = StringField('SEO STATEMENT: ', validators=[DataRequired(), Length(max=320, message='Please shorthen your statement!')])
     seo_keywords = StringField('SEO KEYWORDS: ', validators=[DataRequired()])
     image = FileField()

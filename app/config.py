@@ -7,3 +7,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres@localhost:5432/my-port'
     CKEDITOR_ENABLE_CODESNIPPET = True
     CKEDITOR_CODE_THEME = "default"
+    

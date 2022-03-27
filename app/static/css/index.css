@@ -219,4 +219,7 @@ pre{
     max-height: 500px
 }
 
-
+.content{
+    visibility: "visible" !important;
+    background-color: red;
+}
