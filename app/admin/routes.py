@@ -54,7 +54,8 @@ def all_articles():
     bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
     HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
     python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
-    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
+    regex = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Regular Expressions'})).count()
+    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python, 'Regular Expressions': regex}
     page = request.args.get('page', 1, type=int)
     articles = Content.query.filter_by(type='Article').order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
@@ -71,7 +72,8 @@ def show_by_category(category):
     bootstrap = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Bootstrap'})).count()
     HTML = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'HTML5'})).count()
     python = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Python'})).count()
-    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python}
+    regex = db.session.query(Content).filter_by(type='Article').filter(Content.subjects.contains({'Regular Expressions'})).count()
+    categories = {'Flask': flask, 'JavaScript': javascript, 'CSS3': css, 'Bootstrap': bootstrap, 'HTML5': HTML, 'Python': python, 'Regular Expressions': regex}    
     page = request.args.get('page', 1, type=int)
     articles = Content.query.filter_by(type='Article').filter(Content.subjects.contains({category})).order_by(Content.date_added.desc())\
         .paginate(page=page, per_page=30)
